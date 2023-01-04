@@ -13,8 +13,13 @@ const forecast = (latitude, longitude, callback) => {
     } else if (body.error) {
       callback(error, undefined)
     } else {
-      const { temperature, feelslike, weather_descriptions: descriptions } = body.current
-      callback(undefined, descriptions[0] + '. It is currently ' + temperature + ' degrees out. It feels like ' + feelslike + ' degrees.')
+      const { temperature, feelslike, weather_descriptions: descriptions, precip, humidity } = body.current
+      let forecastString = 'It is ' + descriptions[0] + '.\n'
+      forecastString += ' It is currently ' + temperature + ' degrees out.\n'
+      forecastString += ' With a ' + precip + '% chance of rain.\n'
+      forecastString += humidity + '% humidity.\n'
+      forecastString += ' It feels like ' + feelslike + ' degrees.\n'
+      callback(undefined, forecastString)
     }
   })
 }
